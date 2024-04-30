@@ -42,7 +42,7 @@ async function run() {
       const user = req.query.email;
       const query = { email: user };
       const result = await usersCollection.findOne(query);
-      console.log(result);
+      // console.log(result);
       res.send(result);
     });
 
@@ -65,7 +65,7 @@ async function run() {
       const id = req.params.id;
       const userDetails = req.body;
 
-      console.log(id);
+      // console.log(id);
 
       const filter = { _id: new ObjectId(id) };
       const options = { upsert: true };
@@ -117,7 +117,7 @@ async function run() {
     });
 
     // update a post
-    app.put("/users/:id", async (req, res) => {
+    app.put("/posts/:id", async (req, res) => {
       const id = req.params.id;
       const postDetails = req.body;
 
