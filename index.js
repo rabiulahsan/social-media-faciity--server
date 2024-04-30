@@ -98,6 +98,13 @@ async function run() {
       res.send(result);
     });
 
+    // post a post
+    app.post("/posts", async (req, res) => {
+      const newPosts = req.body;
+      const result = await postsCollection.insertOne(newPosts);
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
