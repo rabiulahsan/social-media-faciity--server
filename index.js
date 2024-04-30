@@ -90,6 +90,14 @@ async function run() {
       res.send(result);
     });
 
+    // get a comment
+    app.get("/comments/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { postId: new ObjectId(id) };
+      const result = await commentsCollection.findOne(query);
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
