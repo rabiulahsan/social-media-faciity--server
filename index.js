@@ -93,6 +93,7 @@ async function run() {
     // get a comment
     app.get("/comments/:id", async (req, res) => {
       const id = req.params.id;
+      //todo here check wheather object id needed or not for postid
       const query = { postId: new ObjectId(id) };
       const result = await commentsCollection.findOne(query);
       res.send(result);
@@ -142,6 +143,13 @@ async function run() {
     });
 
     // delete a favourite
+    app.delete("/favourites/:id", async (req, res) => {
+      const postId = req.params.id;
+      //todo here check wheather object id needed or not for postid
+      const query = { postId: postId };
+      const result = await favouritesCollection.deleteOne(query);
+      res.send(result);
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
