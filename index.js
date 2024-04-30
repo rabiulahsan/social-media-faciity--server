@@ -38,6 +38,13 @@ async function run() {
       .collection("comments");
 
     //   get a user
+    app.get("/users", async (req, res) => {
+      const user = req.body;
+      const query = { email: user.email };
+
+      const result = await usersCollection.findOne(query);
+      res.send(result);
+    });
 
     //post a user
     app.post("/users", async (req, res) => {
