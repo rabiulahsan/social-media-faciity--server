@@ -30,9 +30,9 @@ async function run() {
     //database collection
     const usersCollection = client.db("media-facilities").collection("users");
     const postsCollection = client.db("media-facilities").collection("posts");
-    const fovouritesCollection = client
+    const favouritesCollection = client
       .db("media-facilities")
-      .collection("fovourites");
+      .collection("favourites");
     const commentsCollection = client
       .db("media-facilities")
       .collection("comments");
@@ -127,6 +127,21 @@ async function run() {
       );
       res.send(result);
     });
+
+    // post a favourite
+
+    // get  all favourite post of a user
+    app.get("/favourites", async (req, res) => {
+      const userEmail = req.query.email;
+      //   console.log(userEmail);
+
+      const query = { userEmail: userEmail };
+
+      const result = await favouritesCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    // delete a favourite
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
