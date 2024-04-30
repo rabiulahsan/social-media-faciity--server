@@ -109,6 +109,15 @@ async function run() {
       res.send(result);
     });
 
+    // get specific post by id
+    app.get("/posts/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const query = { _id: new ObjectId(id) };
+      const result = await postsCollection.findOne(query);
+      res.send(result);
+    });
+
     // post a post
     app.post("/posts", async (req, res) => {
       const newPosts = req.body;
