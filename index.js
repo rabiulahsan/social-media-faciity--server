@@ -130,6 +130,12 @@ async function run() {
     });
 
     // post a favourite
+    app.post("/favourites", async (req, res) => {
+      const selectedPost = req.body;
+      // console.log(selectedPost);
+      const result = await favouritesCollection.insertOne(selectedPost);
+      res.send(result);
+    });
 
     // get  all favourite post of a user
     app.get("/favourites", async (req, res) => {
