@@ -83,6 +83,13 @@ async function run() {
       res.send(result);
     });
 
+    // post a comment
+    app.post("/comments", async (req, res) => {
+      const newComment = req.body;
+      const result = await commentsCollection.insertOne(newComment);
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
