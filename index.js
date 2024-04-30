@@ -37,6 +37,22 @@ async function run() {
       .db("media-facilities")
       .collection("comments");
 
+    //   get a user
+
+    //post a user
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      const query = { email: user.email };
+      const exist = await usersCollection.findOne(query);
+
+      if (exist) {
+        return res.send({ message: "user already exists" });
+      }
+
+      const result = await usersCollection.insertOne(user);
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
