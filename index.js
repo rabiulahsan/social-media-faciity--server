@@ -102,6 +102,10 @@ async function run() {
     //get all post
     app.get("/posts", async (req, res) => {
       const result = await postsCollection.find().toArray();
+      // const result = await postsCollection.find().sort({ likes: -1 }).toArray();
+      //? by the both  way we can do sort
+      // Sort the posts in descending order based on likes
+      // result.sort((a, b) => b.likes - a.likes);
       res.send(result);
     });
 
