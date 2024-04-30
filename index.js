@@ -60,6 +60,29 @@ async function run() {
       res.send(result);
     });
 
+    // update a user
+    app.put("/users/:id", async (req, res) => {
+      const id = req.params.id;
+      const userDetails = req.body;
+
+      console.log(id);
+
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedUserDetails = {
+        $set: {
+          ...userDetails,
+        },
+      };
+
+      const result = await usersCollection.updateOne(
+        filter,
+        updatedUserDetails,
+        options
+      );
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
