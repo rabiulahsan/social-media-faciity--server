@@ -99,6 +99,12 @@ async function run() {
       res.send(result);
     });
 
+    //get all post
+    app.get("/posts", async (req, res) => {
+      const result = await postsCollection.find().toArray();
+      res.send(result);
+    });
+
     // post a post
     app.post("/posts", async (req, res) => {
       const newPosts = req.body;
