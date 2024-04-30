@@ -105,6 +105,29 @@ async function run() {
       res.send(result);
     });
 
+    // update a post
+    app.put("/users/:id", async (req, res) => {
+      const id = req.params.id;
+      const postDetails = req.body;
+
+      console.log(id);
+
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedPostDetails = {
+        $set: {
+          ...postDetails,
+        },
+      };
+
+      const result = await postsCollection.updateOne(
+        filter,
+        updatedPostDetails,
+        options
+      );
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
