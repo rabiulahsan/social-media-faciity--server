@@ -101,7 +101,7 @@ async function run() {
     });
 
     //get all post
-    app.get("/posts", async (req, res) => {
+    app.get("/allposts", async (req, res) => {
       const result = await postsCollection.find().toArray();
       // const result = await postsCollection.find().sort({ likes: -1 }).toArray();
       //? by the both  way we can do sort
@@ -112,10 +112,10 @@ async function run() {
 
     //get post of a user
     app.get("/posts", async (req, res) => {
-      const userEmail = req.query.email;
-      //   console.log(userEmail);
+      const email = req.query.email;
+      console.log(email);
 
-      const query = { userEmail: userEmail };
+      const query = { userEmail: email };
 
       const result = await postsCollection.find(query).toArray();
       res.send(result);
@@ -161,7 +161,7 @@ async function run() {
     });
 
     //delete a post
-    app.delete("/posts/:id", verifyJWT, async (req, res) => {
+    app.delete("/posts/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await postsCollection.deleteOne(query);
