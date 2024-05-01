@@ -110,6 +110,17 @@ async function run() {
       res.send(result);
     });
 
+    //get post of a user
+    app.get("/posts", async (req, res) => {
+      const userEmail = req.query.email;
+      //   console.log(userEmail);
+
+      const query = { userEmail: userEmail };
+
+      const result = await postsCollection.find(query).toArray();
+      res.send(result);
+    });
+
     // get specific post by id
     app.get("/posts/:id", async (req, res) => {
       const id = req.params.id;
