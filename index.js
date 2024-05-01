@@ -160,6 +160,14 @@ async function run() {
       res.send(result);
     });
 
+    //delete a post
+    app.delete("/posts/:id", verifyJWT, async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await postsCollection.deleteOne(query);
+      res.send(result);
+    });
+
     // post a favourite
     app.post("/favourites", async (req, res) => {
       const selectedPost = req.body;
