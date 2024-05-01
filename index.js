@@ -90,12 +90,13 @@ async function run() {
       res.send(result);
     });
 
-    // get a comment
-    app.get("/comments/:id", async (req, res) => {
-      const id = req.params.id;
-      //todo here check wheather object id needed or not for postid
-      const query = { postId: new ObjectId(id) };
-      const result = await commentsCollection.findOne(query);
+    // get comments for specific post
+    app.get("/comments", async (req, res) => {
+      const id = req.query.id;
+      // console.log(id);
+
+      const query = { postId: id };
+      const result = await commentsCollection.find(query).toArray();
       res.send(result);
     });
 
