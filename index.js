@@ -190,7 +190,7 @@ async function run() {
     // delete a favourite
     app.delete("/favourites/:id", async (req, res) => {
       const postId = req.params.id;
-      //todo here check wheather object id needed or not for postid
+
       const query = { postId: postId };
       const result = await favouritesCollection.deleteOne(query);
       res.send(result);
