@@ -64,6 +64,7 @@ async function run() {
     const messagesCollection = client
       .db("media-facilities")
       .collection("messages");
+    const chatsCollection = client.db("media-facilities").collection("chats");
 
     //   get a user
     app.get("/users", async (req, res) => {
@@ -239,6 +240,14 @@ async function run() {
       const selectedMessages = req.body;
 
       const result = await messagesCollection.insertOne(selectedMessages);
+      res.send(result);
+    });
+
+    //posting chat
+    app.post("/chats", async (req, res) => {
+      const selectedChats = req.body;
+
+      const result = await chatsCollection.insertOne(selectedChats);
       res.send(result);
     });
 
