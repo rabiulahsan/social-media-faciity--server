@@ -46,6 +46,16 @@ async function run() {
       res.send(result);
     });
 
+    //get all users
+    app.get("/allusers", async (req, res) => {
+      const result = await usersCollection.find().toArray();
+      // const result = await postsCollection.find().sort({ likes: -1 }).toArray();
+      //? by the both  way we can do sort
+      // Sort the posts in descending order based on likes
+      // result.sort((a, b) => b.likes - a.likes);
+      res.send(result);
+    });
+
     //post a user
     app.post("/users", async (req, res) => {
       const user = req.body;
