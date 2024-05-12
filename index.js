@@ -244,6 +244,7 @@ async function run() {
     });
 
     //get messages from one chat
+    //here id = chat id  hobe. jei chat er data lagbe sei chatId
     app.get("/messages/:id", async (req, res) => {
       const chatId = req.params.id;
 
@@ -271,7 +272,7 @@ async function run() {
       // Create a new chat
       const newChat = { users: [loggedUserId, userId] };
       const result = await chatsCollection.insertOne(newChat);
-      res.send(result);
+      res.send(result.ops[0]);
     });
 
     // chat users search api
