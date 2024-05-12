@@ -61,6 +61,9 @@ async function run() {
     const commentsCollection = client
       .db("media-facilities")
       .collection("comments");
+    const messagesCollection = client
+      .db("media-facilities")
+      .collection("messages");
 
     //   get a user
     app.get("/users", async (req, res) => {
@@ -228,6 +231,14 @@ async function run() {
 
       const query = { postId: postId };
       const result = await favouritesCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    //posting message
+    app.post("/messages", async (req, res) => {
+      const selectedMessages = req.body;
+
+      const result = await messagesCollection.insertOne(selectedMessages);
       res.send(result);
     });
 
