@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const http = require("http");
+const server = http.createServer(app);
 
 require("dotenv").config();
 const port = process.env.PORT || 5000;
@@ -8,6 +10,29 @@ const port = process.env.PORT || 5000;
 // middleware
 app.use(cors());
 app.use(express.json());
+
+//creation server
+
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  // if connecting then message
+  console.log("a user connected");
+
+  socket.on("send", (data) => {
+    console.log(data);
+  });
+
+  // Handle disconnection
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+});
 
 //database api
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
@@ -223,6 +248,6 @@ app.get("/", (req, res) => {
   res.send("Running");
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Running on port ${port}`);
 });
