@@ -275,6 +275,18 @@ async function run() {
       res.send(result.ops[0]);
     });
 
+    //get specific users all chats
+    app.get("/chats/:id", async (req, res) => {
+      const userId = req.params.id;
+
+      const results = await chatsCollection
+        .find({
+          users: { $elemMatch: { $eq: userId } },
+        })
+        .toArray();
+      res.send(results);
+    });
+
     // chat users search api
     // chatusers?value=rabiul
     app.get("/chatusers", async (req, res) => {
