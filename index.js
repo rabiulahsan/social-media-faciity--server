@@ -295,11 +295,25 @@ async function run() {
       res.send(results);
     });
 
+    //get chat id and details
+    //http://localhost:5000/chats?loggedUserId=${loggedUser?._id}&userId=${userId}
+    app.get("/chats", async (req, res) => {
+      const loggedUserId = req.query.loggedUserId;
+      const userId = req.query.userId;
+
+      const result = await chatsCollection.findOne({
+        $and: [
+          { users: { $elemMatch: { $eq: loggedUserId } } },
+          { users: { $elemMatch: { $eq: userId } } },
+        ],
+      });
+      res.send(result);
+    });
+
     // chat users search api
     // chatusers?value=rabiul
     app.get("/chatusers", async (req, res) => {
       const user = req.query.value;
-      // const query = { email: user };
       console.log(user);
       const results = await usersCollection
         .find({
