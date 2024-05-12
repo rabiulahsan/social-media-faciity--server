@@ -243,6 +243,15 @@ async function run() {
       res.send(result);
     });
 
+    //get messages from one chat
+    app.get("/messages/:id", async (req, res) => {
+      const chatId = req.params.id;
+
+      const query = { chatId: chatId };
+      const result = await messagesCollection.find(query).toArray();
+      res.send(result);
+    });
+
     // POST request to create a new chat or get an existing one
     app.post("/chats", async (req, res) => {
       const { loggedUserId, userId } = req.body;
