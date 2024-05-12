@@ -243,15 +243,30 @@ async function run() {
       res.send(result);
     });
 
-    //posting chat
+    // POST request to create a new chat or get an existing one
     app.post("/chats", async (req, res) => {
-      const selectedChats = req.body;
+      const { loggedUserId, userId } = req.body;
 
-      const result = await chatsCollection.insertOne(selectedChats);
+      // Check if the chat already exists
+      const existingChat = await chatsCollection.findOne({
+        $and: [
+          { users: { $elemMatch: { $eq: loggedUserId } } },
+          { users: { $elemMatch: { $eq: userId } } },
+        ],
+      });
+
+      if (existingChat) {
+        return res.send(existingChat);
+      }
+
+      // Create a new chat
+      const newChat = { users: [loggedUserId, userId] };
+      const result = await chatsCollection.insertOne(newChat);
       res.send(result);
     });
 
-    //search api
+    // chat users search api
+    // chatusers?value=rabiul
     app.get("/chatusers", async (req, res) => {
       const user = req.query.value;
       // const query = { email: user };
