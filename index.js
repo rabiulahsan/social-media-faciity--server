@@ -251,6 +251,22 @@ async function run() {
       res.send(result);
     });
 
+    //search api
+    app.get("/chatusers", async (req, res) => {
+      const user = req.query.value;
+      // const query = { email: user };
+      console.log(user);
+      const results = await usersCollection
+        .find({
+          $or: [
+            { name: { $regex: user, $options: "i" } }, // Case-insensitive search for name
+            { email: { $regex: user, $options: "i" } }, // Case-insensitive search for email
+          ],
+        })
+        .toArray();
+      res.send(results);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
