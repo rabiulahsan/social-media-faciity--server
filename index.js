@@ -264,6 +264,7 @@ async function run() {
     // POST request to create a new chat or get an existing one
     app.post("/chats", async (req, res) => {
       const { loggedUserId, userId } = req.body;
+      // console.log(loggedUserId, userId);
 
       // Check if the chat already exists
       const existingChat = await chatsCollection.findOne({
@@ -274,13 +275,14 @@ async function run() {
       });
 
       if (existingChat) {
-        return res.send(existingChat);
+        // console.log(existingChat);
+        return;
       }
 
       // Create a new chat
       const newChat = { users: [loggedUserId, userId] };
       const result = await chatsCollection.insertOne(newChat);
-      res.send(result.ops[0]);
+      res.send(result);
     });
 
     //get specific users all chats
@@ -297,7 +299,7 @@ async function run() {
 
     //get chat id and details
     //http://localhost:5000/chats?loggedUserId=${loggedUser?._id}&userId=${userId}
-    app.get("/chats", async (req, res) => {
+    app.get("/chat", async (req, res) => {
       const loggedUserId = req.query.loggedUserId;
       const userId = req.query.userId;
 
