@@ -24,10 +24,22 @@ io.on("connection", (socket) => {
   // if connecting then message
   console.log("a user connected");
 
-  socket.on("send", (data) => {
-    console.log(data);
+  socket.on("setup", (data) => {
+    socket.join(data);
+    socket.emit("connected");
   });
 
+  // joinig in a room
+  socket.on("join-room", (data) => {
+    socket.join(data);
+    console.log("user joined: " + data);
+
+    socket.on("new-message", (receivedMessage) => {
+      // socket.emit("receive-message", receivedMessage);
+      io.emit("receive-message", receivedMessage);
+      // console.log(receivedMessage);
+    });
+  });
   // Handle disconnection
   socket.on("disconnect", () => {
     console.log("user disconnected");
