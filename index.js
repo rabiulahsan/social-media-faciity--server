@@ -275,7 +275,7 @@ async function run() {
       });
 
       if (existingChat) {
-        // console.log(existingChat);
+        res.json({ userId });
         return;
       }
 
