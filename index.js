@@ -15,7 +15,7 @@ app.use(express.json());
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://share-words.netlify.app/",
     methods: ["GET", "POST"],
   },
 });
@@ -310,7 +310,7 @@ async function run() {
     });
 
     //get chat id and details
-    //http://localhost:5000/chats?loggedUserId=${loggedUser?._id}&userId=${userId}
+    //hhttps://social-facilites-server.vercel.app/chats?loggedUserId=${loggedUser?._id}&userId=${userId}
     app.get("/chat", async (req, res) => {
       const loggedUserId = req.query.loggedUserId;
       const userId = req.query.userId;
