@@ -310,7 +310,7 @@ async function run() {
     });
 
     //get chat id and details
-    //hhttps://social-facilites-server.vercel.app/chats?loggedUserId=${loggedUser?._id}&userId=${userId}
+    //https://social-facilites-server.vercel.app/chats?loggedUserId=${loggedUser?._id}&userId=${userId}
     app.get("/chat", async (req, res) => {
       const loggedUserId = req.query.loggedUserId;
       const userId = req.query.userId;
